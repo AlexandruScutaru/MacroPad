@@ -1,8 +1,11 @@
 # MacroPad
 Simple and compact (5x7 cm) Arduino Pro Micro based macro pad.
 
-For wiring follow [these pins definitions](https://github.com/AlexandruScutaru/MacroPad/blob/master/src/PinConfig.cpp#L8-L22) and the cartoonish schematic below:\
-<img src="https://github.com/AlexandruScutaru/MacroPad/blob/master/readme_resources/macro_kb_schemtic.png" alt="macro_kb_schemtic.png" width="40%"/>
+For wiring follow [these pins definitions](https://github.com/AlexandruScutaru/MacroPad/blob/master/src/PinConfig.cpp#L8-L22) and the cartoonish schematic below on the left:\
+<img src="https://github.com/AlexandruScutaru/MacroPad/blob/master/readme_resources/macro_kb_schemtic.png" alt="macro_kb_schemtic.png" width="50%"/>
+<img src="https://github.com/AlexandruScutaru/MacroPad/blob/master/readme_resources/macro_kb_photo.png" alt="macro_kb_photo.png" width="47%"/>
+
+Above shows the initial prototype, the jumper wires came out worse than expected, but at least it is all wired up and working
 
 The Slide Switch is used to put hte MacroPad in mouse mode, where the Joystick and the two smaller push buttons directly under the ProMicro board act as a mouse.
 
