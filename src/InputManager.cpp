@@ -36,9 +36,9 @@ bool InputManager::wasButtonPressedNow(Buttons button) {
     return (mButtonMask & button) && !(mPrevButtonMask & button);
 }
 
-int16_t InputManager::getPotDelta() {
-    auto delta = mPotValue - mOldPotValue;
-    return abs(delta) > 1 ? delta : 0;
+bool InputManager::getPotPercentage(uint8_t& outValue) {
+    outValue = mPotValue;
+    return mPotValue != mOldPotValue;
 }
 
 int16_t InputManager::getJoyXDelta() {
@@ -120,7 +120,10 @@ void InputManager::processIrRemote() {
 void InputManager::processAnalogInputs() {
     //volume wheel/pot
     mOldPotValue = mPotValue;
-    mPotValue = analogRead(PinConfig::VOLUME_POT);
+    int potReading = analogRead(PinConfig::VOLUME_POT);
+    // dividing by 1024 using shifting insterad of actual division (/) 
+    // but by not dividing to 1023 it returns a value up to 99%, anyway 100% was already fairly unstable
+    mPotValue = (potReading * 100L) >> 10L;
 
     //joystick
     mOldJoyXValue = mJoyXValue;

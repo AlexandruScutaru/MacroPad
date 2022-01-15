@@ -31,7 +31,7 @@ public:
     bool isButtonReleased(Buttons button);
     bool wasButtonPressedNow(Buttons button);
 
-    int16_t getPotDelta();
+    bool getPotPercentage(uint8_t& outValue);
     int16_t getJoyXDelta();
     int16_t getJoyYDelta();
 
@@ -43,11 +43,11 @@ private:
     void processAnalogInputs();
     void processPushBUttons();
 
+    uint8_t mPotValue = 0;
+    uint8_t mOldPotValue = 0;
+
     uint16_t mButtonMask = 0;
     uint16_t mPrevButtonMask = 0;
-
-    uint16_t mPotValue = 0;
-    uint16_t mOldPotValue = 0;
 
     uint16_t mJoyXValue = 0;
     uint16_t mOldJoyXValue = 0;

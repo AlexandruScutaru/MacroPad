@@ -4,6 +4,7 @@
 #include "InputManager.h"
 #include "MacroActions.h"
 
+
 class MacroPad {
 public:
     void start();
@@ -13,7 +14,11 @@ private:
     void registerActions();
     void loop();
     void update();
-    void handleInput();
+    void handleInputs();
+    void handleMouse();
+    void handleButtons();
+    void handleIrRemote();
+    void handlePotWheel();
     void handleLEDs();
 
     InputManager mInputManager;

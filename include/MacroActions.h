@@ -19,7 +19,7 @@ struct MacroActions {
     MacroActions();
 
     using ButtonFunc = void (*)(ActionType action);
-    using PotWheelFunc = void (*)(int8_t dt);
+    using PotWheelFunc = void (*)(uint8_t value);
     using JoystickFunc = void (*)(int8_t dtX, int8_t dtY);
 
     ButtonFunc OnMatButton[3][2];

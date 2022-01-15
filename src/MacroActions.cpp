@@ -1,7 +1,8 @@
 #include "MacroActions.h"
 
-#include <Mouse.h>
-#include <Keyboard.h>
+//this must to be included before HID itself
+#include <Arduino.h> 
+#include <HID-Project.h>
 
 using ActionType = MacroActions::ActionType;
 
@@ -57,33 +58,36 @@ static void right(ActionType action) {
     handleMouseClick(action, MOUSE_RIGHT);
 }
 
-static void irPlay(ActionType action) {
-    Keyboard.press('e');
-    Keyboard.release('e');
+static void irPlayPause(ActionType action) {
+    Consumer.write(MEDIA_PLAY_PAUSE);
 }
 
 static void irVolUp(ActionType action) {
-    
+    Consumer.write(MEDIA_VOL_UP);
 }
 
 static void irVolDown(ActionType action) {
-    
+    Consumer.write(MEDIA_VOLUME_DOWN);
 }
 
 static void irMute(ActionType action) {
-    
+    Consumer.write(MEDIA_VOLUME_MUTE);
 }
 
 static void irNext(ActionType action) {
-    
+    Consumer.write(MEDIA_NEXT);
 }
 
 static void irPrev(ActionType action) {
-    
+    Consumer.write(MEDIA_PREV);
 }
 
-static void pot(int8_t dt) {
-    
+static void pot(uint8_t value) {
+    // :(
+    // the volume cannot be set as an absolute value
+    // unfortunately HID doesn't work like this
+    // only via relative up/down steps
+    // next time I better use a rottary encoder...
 }
 
 static void joystick(int8_t dtX, int8_t dtY) {
@@ -91,11 +95,15 @@ static void joystick(int8_t dtX, int8_t dtY) {
 }
 
 
-MacroActions::MacroActions() 
+MacroActions::MacroActions()
     : OnMatButton{ {mat_11, mat_12}, {mat_21, mat_22}, {mat_31, mat_32} }
     , OnLeftButton(left)
     , OnRightButton(right)
-    , OnIrRemoteButton({ irPlay, irVolUp, irVolDown, irMute, irPrev, irNext })
+    , OnIrRemoteButton({ irPlayPause, irVolUp, irVolDown, irMute, irPrev, irNext })
     , OnPotWheel(pot)
     , OnJoy(joystick)
-{}
+{
+    Consumer.begin();
+    Keyboard.begin();
+    Mouse.begin();
+}
