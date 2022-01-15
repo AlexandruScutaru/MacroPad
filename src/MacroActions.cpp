@@ -26,16 +26,15 @@ static void handleMouseClick(ActionType action, uint8_t button) {
 }
 
 static void mat_11(ActionType action) {
-    Keyboard.press(KEY_LEFT_GUI);
-    Keyboard.release(KEY_LEFT_GUI);
+    Consumer.write(CONSUMER_EXPLORER);
 }
 
 static void mat_12(ActionType action) {
-    
+    Consumer.write(CONSUMER_BROWSER_HOME);
 }
 
 static void mat_21(ActionType action) {
-    
+    Keyboard.write(KEY_LEFT_GUI);
 }
 
 static void mat_22(ActionType action) {
@@ -60,6 +59,10 @@ static void right(ActionType action) {
 
 static void irPlayPause(ActionType action) {
     Consumer.write(MEDIA_PLAY_PAUSE);
+}
+
+static void irStop(ActionType action) {
+    Consumer.write(MEDIA_STOP);
 }
 
 static void irVolUp(ActionType action) {
@@ -99,7 +102,7 @@ MacroActions::MacroActions()
     : OnMatButton{ {mat_11, mat_12}, {mat_21, mat_22}, {mat_31, mat_32} }
     , OnLeftButton(left)
     , OnRightButton(right)
-    , OnIrRemoteButton({ irPlayPause, irVolUp, irVolDown, irMute, irPrev, irNext })
+    , OnIrRemoteButton({ irPlayPause, irStop, irVolUp, irVolDown, irMute, irPrev, irNext })
     , OnPotWheel(pot)
     , OnJoy(joystick)
 {

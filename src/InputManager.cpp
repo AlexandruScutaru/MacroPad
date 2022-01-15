@@ -96,6 +96,9 @@ void InputManager::processIrRemote() {
         case Keys::PLAY_PAUSE:
             mButtonMask |= Buttons::IR_PLAY_PAUSE;
             break;
+        case Keys::STOP:
+            mButtonMask |= Buttons::IR_STOP;
+            break;
         case Keys::VOL_UP:
             mButtonMask |= Buttons::IR_VOL_UP;
             break;

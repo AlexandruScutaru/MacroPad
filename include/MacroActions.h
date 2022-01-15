@@ -25,7 +25,7 @@ struct MacroActions {
     ButtonFunc OnMatButton[3][2];
     ButtonFunc OnLeftButton;
     ButtonFunc OnRightButton;
-    ButtonFunc OnIrRemoteButton[6];
+    ButtonFunc OnIrRemoteButton[7];
     PotWheelFunc OnPotWheel;
     JoystickFunc OnJoy;
 

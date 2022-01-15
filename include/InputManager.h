@@ -7,21 +7,22 @@
 class InputManager{
 public:
     enum Buttons {
-        MAT_11          = 0x0001,
-        MAT_12          = 0x0002,
-        MAT_21          = 0x0004,
-        MAT_22          = 0x0008,
-        MAT_31          = 0x0010,
-        MAT_32          = 0x0020,
-        LEFT            = 0x0040,
-        RIGHT           = 0x0080,
-        SWITCH          = 0x0100,
-        IR_PLAY_PAUSE   = 0x0200,
-        IR_MUTE         = 0x0400,
-        IR_VOL_UP       = 0x0800,
-        IR_VOL_DOWN     = 0x1000,
-        IR_PREV         = 0x2000,
-        IR_NEXT         = 0x4000,
+        MAT_11          = 1 <<  0,
+        MAT_12          = 1 <<  1,
+        MAT_21          = 1 <<  2,
+        MAT_22          = 1 <<  3,
+        MAT_31          = 1 <<  4,
+        MAT_32          = 1 <<  5,
+        LEFT            = 1 <<  6,
+        RIGHT           = 1 <<  7,
+        SWITCH          = 1 <<  8,
+        IR_PLAY_PAUSE   = 1 <<  9,
+        IR_STOP         = 1 << 10,
+        IR_MUTE         = 1 << 11,
+        IR_VOL_UP       = 1 << 12,
+        IR_VOL_DOWN     = 1 << 13,
+        IR_PREV         = 1 << 14,
+        IR_NEXT         = 1 << 15,
     };
 
     void init();

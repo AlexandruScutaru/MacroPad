@@ -7,6 +7,7 @@ namespace IrRemoteWrapper {
     enum class Keys {
         UNKNOWN = 0,
         PLAY_PAUSE,
+        STOP,
         VOL_UP,
         VOL_DOWN,
         MUTE,

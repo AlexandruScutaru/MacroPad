@@ -118,20 +118,23 @@ void MacroPad::handleIrRemote() {
     if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_PLAY_PAUSE)) {
         mMacroActions.OnIrRemoteButton[0](MacroActions::ActionType::TAP);
     }
-    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_VOL_UP)) {
+    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_STOP)) {
         mMacroActions.OnIrRemoteButton[1](MacroActions::ActionType::TAP);
     }
-    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_VOL_DOWN)) {
+    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_VOL_UP)) {
         mMacroActions.OnIrRemoteButton[2](MacroActions::ActionType::TAP);
     }
-    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_MUTE)) {
+    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_VOL_DOWN)) {
         mMacroActions.OnIrRemoteButton[3](MacroActions::ActionType::TAP);
     }
-    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_PREV)) {
+    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_MUTE)) {
         mMacroActions.OnIrRemoteButton[4](MacroActions::ActionType::TAP);
     }
-    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_NEXT)) {
+    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_PREV)) {
         mMacroActions.OnIrRemoteButton[5](MacroActions::ActionType::TAP);
+    }
+    if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_NEXT)) {
+        mMacroActions.OnIrRemoteButton[6](MacroActions::ActionType::TAP);
     }
 }
 
