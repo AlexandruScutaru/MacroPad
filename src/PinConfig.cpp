@@ -17,7 +17,8 @@ namespace PinConfig {
     const uint8_t LED_MOUSE       =  8;
     const uint8_t BUTTON_LEFT     =  9;
     const uint8_t BUTTON_RIGHT    = 10;
-    const uint8_t VOLUME_POT      = A0;
+    const uint8_t ROT_ENCODER_A   =  2;
+    const uint8_t ROT_ENCODER_B   =  3;
     const uint8_t JOY_X           = A1;
     const uint8_t JOY_Y           = A2;
 
@@ -50,7 +51,8 @@ namespace PinConfig {
         pinMode(LED_MOUSE, OUTPUT);
         pinMode(BUTTON_LEFT, INPUT_PULLUP);
         pinMode(BUTTON_RIGHT, INPUT_PULLUP);
-        pinMode(VOLUME_POT, INPUT);
+        pinMode(ROT_ENCODER_A, INPUT_PULLUP);
+        pinMode(ROT_ENCODER_B, INPUT_PULLUP);
         pinMode(JOY_X, INPUT);
         pinMode(JOY_Y, INPUT);
         //pinMode(IR_SENSOR, INPUT);

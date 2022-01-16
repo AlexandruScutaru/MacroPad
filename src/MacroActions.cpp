@@ -38,7 +38,7 @@ static void mat_21(ActionType action) {
 }
 
 static void mat_22(ActionType action) {
-    
+    Mouse.move(0, 0, 2);
 }
 
 static void mat_31(ActionType action) {
@@ -46,7 +46,7 @@ static void mat_31(ActionType action) {
 }
 
 static void mat_32(ActionType action) {
-    
+    Mouse.move(0, 0, -2);
 }
 
 static void left(ActionType action) {
@@ -85,12 +85,20 @@ static void irPrev(ActionType action) {
     Consumer.write(MEDIA_PREV);
 }
 
-static void pot(uint8_t value) {
-    // :(
-    // the volume cannot be set as an absolute value
-    // unfortunately HID doesn't work like this
-    // only via relative up/down steps
-    // next time I better use a rottary encoder...
+static void scrollUp() {
+    Mouse.move(0, 0, 2);
+}
+
+static void scrollDown() {
+    Mouse.move(0, 0, -2);
+}
+
+static void volumeUp() {
+    Consumer.write(MEDIA_VOL_UP);
+}
+
+static void volumeDown() {
+    Consumer.write(MEDIA_VOLUME_DOWN);
 }
 
 static void joystick(int8_t dtX, int8_t dtY) {
@@ -103,7 +111,10 @@ MacroActions::MacroActions()
     , OnLeftButton(left)
     , OnRightButton(right)
     , OnIrRemoteButton({ irPlayPause, irStop, irVolUp, irVolDown, irMute, irPrev, irNext })
-    , OnPotWheel(pot)
+    , OnScrollUp(scrollUp)
+    , OnScrollDown(scrollDown)
+    , OnVolumeUp(volumeUp)
+    , OnVolumeDown(volumeDown)
     , OnJoy(joystick)
 {
     Consumer.begin();

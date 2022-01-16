@@ -6,23 +6,25 @@
 
 class InputManager{
 public:
-    enum Buttons {
-        MAT_11          = 1 <<  0,
-        MAT_12          = 1 <<  1,
-        MAT_21          = 1 <<  2,
-        MAT_22          = 1 <<  3,
-        MAT_31          = 1 <<  4,
-        MAT_32          = 1 <<  5,
-        LEFT            = 1 <<  6,
-        RIGHT           = 1 <<  7,
-        SWITCH          = 1 <<  8,
-        IR_PLAY_PAUSE   = 1 <<  9,
-        IR_STOP         = 1 << 10,
-        IR_MUTE         = 1 << 11,
-        IR_VOL_UP       = 1 << 12,
-        IR_VOL_DOWN     = 1 << 13,
-        IR_PREV         = 1 << 14,
-        IR_NEXT         = 1 << 15,
+    enum Buttons : uint32_t {
+        MAT_11           = 1UL <<  0UL,
+        MAT_12           = 1UL <<  1UL,
+        MAT_21           = 1UL <<  2UL,
+        MAT_22           = 1UL <<  3UL,
+        MAT_31           = 1UL <<  4UL,
+        MAT_32           = 1UL <<  5UL,
+        LEFT             = 1UL <<  6UL,
+        RIGHT            = 1UL <<  7UL,
+        SWITCH           = 1UL <<  8UL,
+        ROT_ENCODER_UP   = 1UL <<  9UL,
+        ROT_ENCODER_DOWN = 1UL << 10UL,
+        IR_PLAY_PAUSE    = 1UL << 11UL,
+        IR_STOP          = 1UL << 12UL,
+        IR_MUTE          = 1UL << 13UL,
+        IR_VOL_UP        = 1UL << 14UL,
+        IR_VOL_DOWN      = 1UL << 15UL,
+        IR_PREV          = 1UL << 16UL,
+        IR_NEXT          = 1UL << 17UL,
     };
 
     void init();
@@ -32,7 +34,6 @@ public:
     bool isButtonReleased(Buttons button);
     bool wasButtonPressedNow(Buttons button);
 
-    bool getPotPercentage(uint8_t& outValue);
     int16_t getJoyXDelta();
     int16_t getJoyYDelta();
 
@@ -43,9 +44,11 @@ private:
     void processIrRemote();
     void processAnalogInputs();
     void processPushBUttons();
+    void processRotaryEncoder();
 
-    uint8_t mPotValue = 0;
-    uint8_t mOldPotValue = 0;
+    uint8_t mEncoderA = 0;
+    uint8_t mEncoderB = 0;
+    uint8_t mEncoderAPrev = 0;
 
     uint16_t mButtonMask = 0;
     uint16_t mPrevButtonMask = 0;

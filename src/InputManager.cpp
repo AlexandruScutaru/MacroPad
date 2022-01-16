@@ -18,6 +18,7 @@ void InputManager::processInput() {
     processMatrixButtons();
     processIrRemote();
     processAnalogInputs();
+    processRotaryEncoder();
 }
 
 bool InputManager::isButtonPressed(Buttons button) {
@@ -34,11 +35,6 @@ bool InputManager::isButtonReleased(Buttons button) {
 
 bool InputManager::wasButtonPressedNow(Buttons button) {
     return (mButtonMask & button) && !(mPrevButtonMask & button);
-}
-
-bool InputManager::getPotPercentage(uint8_t& outValue) {
-    outValue = mPotValue;
-    return mPotValue != mOldPotValue;
 }
 
 int16_t InputManager::getJoyXDelta() {
@@ -121,16 +117,23 @@ void InputManager::processIrRemote() {
 }
 
 void InputManager::processAnalogInputs() {
-    //volume wheel/pot
-    mOldPotValue = mPotValue;
-    int potReading = analogRead(PinConfig::VOLUME_POT);
-    // dividing by 1024 using shifting insterad of actual division (/) 
-    // but by not dividing to 1023 it returns a value up to 99%, anyway 100% was already fairly unstable
-    mPotValue = (potReading * 100L) >> 10L;
-
     //joystick
     mOldJoyXValue = mJoyXValue;
     mJoyXValue = analogRead(PinConfig::JOY_X);
     mOldJoyYValue = mJoyYValue;
     mJoyYValue = analogRead(PinConfig::JOY_Y);
+}
+
+void InputManager::processRotaryEncoder() {
+    mEncoderA = digitalRead(PinConfig::ROT_ENCODER_A);
+    mEncoderB = digitalRead(PinConfig::ROT_ENCODER_B);
+
+    if ((!mEncoderA) && (mEncoderAPrev)) {
+        if (mEncoderB) {
+            mButtonMask |= Buttons::ROT_ENCODER_UP;
+        } else {
+            mButtonMask |= Buttons::ROT_ENCODER_DOWN;
+        }
+    }
+    mEncoderAPrev = mEncoderA;
 }

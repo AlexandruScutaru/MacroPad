@@ -18,7 +18,6 @@ private:
     void handleMouse();
     void handleButtons();
     void handleIrRemote();
-    void handlePotWheel();
     void handleLEDs();
 
     InputManager mInputManager;

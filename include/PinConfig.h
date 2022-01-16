@@ -18,7 +18,8 @@ namespace PinConfig {
     extern const uint8_t LED_MOUSE;
     extern const uint8_t BUTTON_LEFT;
     extern const uint8_t BUTTON_RIGHT;
-    extern const uint8_t VOLUME_POT;
+    extern const uint8_t ROT_ENCODER_A;
+    extern const uint8_t ROT_ENCODER_B;
     extern const uint8_t JOY_X;
     extern const uint8_t JOY_Y;
 

@@ -19,14 +19,17 @@ struct MacroActions {
     MacroActions();
 
     using ButtonFunc = void (*)(ActionType action);
-    using PotWheelFunc = void (*)(uint8_t value);
+    using RotEncoderFunc = void (*)();
     using JoystickFunc = void (*)(int8_t dtX, int8_t dtY);
 
     ButtonFunc OnMatButton[3][2];
     ButtonFunc OnLeftButton;
     ButtonFunc OnRightButton;
     ButtonFunc OnIrRemoteButton[7];
-    PotWheelFunc OnPotWheel;
+    RotEncoderFunc OnScrollUp;
+    RotEncoderFunc OnScrollDown;
+    RotEncoderFunc OnVolumeUp;
+    RotEncoderFunc OnVolumeDown;
     JoystickFunc OnJoy;
 
 };
