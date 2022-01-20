@@ -1,11 +1,18 @@
 #include "InputManager.h"
 #include "PinConfig.h"
 #include "IrRemoteWrapper.h"
+#include "MacroPad.h"
 
 #include <Arduino.h>
 
 
-void InputManager::init() {
+InputManager::InputManager()
+    : mRotEncoder(RotaryEncoder(PinConfig::ROT_ENCODER_A, PinConfig::ROT_ENCODER_B, RotaryEncoder::LatchMode::TWO03))
+{}
+
+void InputManager::init(MacroPad* macroPad) {
+    mMacroPad = macroPad;
+
     mNeutralX = analogRead(PinConfig::JOY_X);
     mNeutralY = analogRead(PinConfig::JOY_Y);
 }
@@ -13,6 +20,8 @@ void InputManager::init() {
 void InputManager::processInput() {
     mPrevButtonMask = mButtonMask;
     mButtonMask = 0;
+
+    mRotEncoder.tick();
 
     processPushBUttons();
     processMatrixButtons();
@@ -125,15 +134,21 @@ void InputManager::processAnalogInputs() {
 }
 
 void InputManager::processRotaryEncoder() {
-    mEncoderA = digitalRead(PinConfig::ROT_ENCODER_A);
-    mEncoderB = digitalRead(PinConfig::ROT_ENCODER_B);
+    RotEncoderState state = RotEncoderState::IDLE;
 
-    if ((!mEncoderA) && (mEncoderAPrev)) {
-        if (mEncoderB) {
-            mButtonMask |= Buttons::ROT_ENCODER_UP;
-        } else {
-            mButtonMask |= Buttons::ROT_ENCODER_DOWN;
-        }
+    switch (mRotEncoder.getDirection()) {
+    case RotaryEncoder::Direction::CLOCKWISE:
+        state = RotEncoderState::DOWN;
+        break;
+    case RotaryEncoder::Direction::COUNTERCLOCKWISE:
+        state = RotEncoderState::UP;
+        break;
+    default:
+        state = RotEncoderState::IDLE; // just so default is not alone :)
+        break;
     }
-    mEncoderAPrev = mEncoderA;
+
+    if (mMacroPad) {
+        mMacroPad->handleRottaryEncoder(state);
+    }
 }

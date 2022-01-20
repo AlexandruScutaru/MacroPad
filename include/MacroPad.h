@@ -18,8 +18,10 @@ private:
     void handleMouse();
     void handleButtons();
     void handleIrRemote();
+    void handleRottaryEncoder(InputManager::RotEncoderState state);
     void handleLEDs();
 
+    friend class InputManager;
     InputManager mInputManager;
     MacroActions mMacroActions;
 

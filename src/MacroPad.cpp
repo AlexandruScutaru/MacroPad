@@ -4,7 +4,7 @@
 
 #include <Arduino.h>
 
-#define UPDATES_PER_SECOND 30
+#define UPDATES_PER_SECOND 60
 #define TICKS_PER_UPDATE (1000.0 / float(UPDATES_PER_SECOND))
 
 #define MOUSE_SENSITIVITY 30
@@ -20,7 +20,7 @@ void MacroPad::start() {
 void MacroPad::init() {
     PinConfig::initPins();
     IrRemoteWrapper::init();
-    mInputManager.init();
+    mInputManager.init(this);
 }
 
 void MacroPad::registerActions() {
@@ -78,13 +78,6 @@ void MacroPad::handleMouse() {
     } else if (mInputManager.isButtonReleased(InputManager::Buttons::RIGHT)) {
         mMacroActions.OnRightButton(MacroActions::ActionType::RELEASE);
     }
-
-    //scroll wheel
-    if (mInputManager.isButtonPressed(InputManager::Buttons::ROT_ENCODER_UP)) {
-        mMacroActions.OnScrollUp();
-    } else if (mInputManager.isButtonPressed(InputManager::Buttons::ROT_ENCODER_DOWN)) {
-        mMacroActions.OnScrollDown();
-    }
 }
 
 void MacroPad::handleButtons() {
@@ -117,12 +110,6 @@ void MacroPad::handleButtons() {
         if (mInputManager.wasButtonPressedNow(InputManager::Buttons::RIGHT)) {
             mMacroState = (mMacroState + 1) % 4;
         }
-
-        if (mInputManager.isButtonPressed(InputManager::Buttons::ROT_ENCODER_UP)) {
-            mMacroActions.OnVolumeUp();
-        } else if (mInputManager.isButtonPressed(InputManager::Buttons::ROT_ENCODER_DOWN)) {
-            mMacroActions.OnVolumeDown();
-        }
     }
 }
 
@@ -147,6 +134,25 @@ void MacroPad::handleIrRemote() {
     }
     if (mInputManager.wasButtonPressedNow(InputManager::Buttons::IR_NEXT)) {
         mMacroActions.OnIrRemoteButton[6](MacroActions::ActionType::TAP);
+    }
+}
+
+void MacroPad::handleRottaryEncoder(InputManager::RotEncoderState state) {
+    mIsMouseMode = mInputManager.isButtonPressed(InputManager::Buttons::SWITCH);
+
+    using Encoder = InputManager::RotEncoderState;
+    if (state == Encoder::UP) {
+        if (mIsMouseMode) {
+            mMacroActions.OnScrollUp();
+        } else {
+            mMacroActions.OnVolumeUp();
+        }
+    } else if (state == Encoder::DOWN) {
+        if (mIsMouseMode) {
+            mMacroActions.OnScrollDown();
+        } else {
+            mMacroActions.OnVolumeDown();
+        }
     }
 }
 

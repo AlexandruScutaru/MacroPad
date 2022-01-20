@@ -2,10 +2,14 @@
 #define INPUT_MANAGER_H
 
 #include <stdint.h>
+#include <RotaryEncoder.h>
 
 
-class InputManager{
+class MacroPad;
+
+class InputManager {
 public:
+    // I do all sorts of binary ops with these fields, don't want to cast everytime
     enum Buttons : uint32_t {
         MAT_11           = 1UL <<  0UL,
         MAT_12           = 1UL <<  1UL,
@@ -16,18 +20,24 @@ public:
         LEFT             = 1UL <<  6UL,
         RIGHT            = 1UL <<  7UL,
         SWITCH           = 1UL <<  8UL,
-        ROT_ENCODER_UP   = 1UL <<  9UL,
-        ROT_ENCODER_DOWN = 1UL << 10UL,
-        IR_PLAY_PAUSE    = 1UL << 11UL,
-        IR_STOP          = 1UL << 12UL,
-        IR_MUTE          = 1UL << 13UL,
-        IR_VOL_UP        = 1UL << 14UL,
-        IR_VOL_DOWN      = 1UL << 15UL,
-        IR_PREV          = 1UL << 16UL,
-        IR_NEXT          = 1UL << 17UL,
+        IR_PLAY_PAUSE    = 1UL <<  9UL,
+        IR_STOP          = 1UL << 10UL,
+        IR_MUTE          = 1UL << 11UL,
+        IR_VOL_UP        = 1UL << 12UL,
+        IR_VOL_DOWN      = 1UL << 13UL,
+        IR_PREV          = 1UL << 14UL,
+        IR_NEXT          = 1UL << 15UL,
     };
 
-    void init();
+    enum class RotEncoderState {
+        IDLE = 0,
+        UP,
+        DOWN
+    };
+
+    InputManager();
+
+    void init(MacroPad* macroPad);
     void processInput();
     bool isButtonPressed(Buttons button);
     bool isButtonHeldDown(Buttons button);
@@ -46,9 +56,7 @@ private:
     void processPushBUttons();
     void processRotaryEncoder();
 
-    uint8_t mEncoderA = 0;
-    uint8_t mEncoderB = 0;
-    uint8_t mEncoderAPrev = 0;
+    RotaryEncoder mRotEncoder;
 
     uint16_t mButtonMask = 0;
     uint16_t mPrevButtonMask = 0;
@@ -59,6 +67,8 @@ private:
     uint16_t mOldJoyYValue = 0;
     uint16_t mNeutralX = 0;
     uint16_t mNeutralY = 0;
+
+    MacroPad* mMacroPad = nullptr;
 
 };
 
